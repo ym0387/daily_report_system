@@ -10,6 +10,7 @@ import constants.ForwardConst;
 import constants.MessageConst;
 import constants.PropertyConst;
 import services.EmployeeService;
+
 /**
  * 認証に関する処理を行うActionクラス
  *
@@ -95,6 +96,24 @@ public class AuthAction extends ActionBase {
             //ログイン画面を表示
             forward(ForwardConst.FW_LOGIN);
         }
+    }
+
+    /**
+     * ログアウト処理を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void logout() throws ServletException, IOException {
+
+        //セッションからログイン従業員のパラメータを削除
+        removeSessionScope(AttributeConst.LOGIN_EMP);
+
+        //セッションにログアウト時のフラッシュメッセージを追加
+        putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGOUT.getMessage());
+
+        //ログイン画面にリダイレクト
+        redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_SHOW_LOGIN);
+
     }
 
 }
